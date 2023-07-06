@@ -1,9 +1,9 @@
 [
   {
-    "id": 1,
+    "id": 2,
     "title": "Prueba 06/07/2023",
     "description": "Description",
-    "code": "a1",
+    "code": "a2",
     "price": 10,
     "status": true,
     "stock": 10,
@@ -11,10 +11,43 @@
     "thumbnail": []
   },
   {
-    "id": 2,
+    "id": 3,
     "title": "Prueba 06/07/2023",
     "description": "Description",
-    "code": "a2",
+    "code": "a5",
+    "price": 10,
+    "status": true,
+    "stock": 10,
+    "category": "Category",
+    "thumbnail": []
+  },
+  {
+    "id": 4,
+    "title": "Prueba 06/07/2023",
+    "description": "Description",
+    "code": "a3",
+    "price": 10,
+    "status": true,
+    "stock": 10,
+    "category": "Category",
+    "thumbnail": []
+  },
+  {
+    "id": 5,
+    "title": "Prueba 06/07/2023",
+    "description": "Description",
+    "code": "a6",
+    "price": 10,
+    "status": true,
+    "stock": 10,
+    "category": "Category",
+    "thumbnail": []
+  },
+  {
+    "id": 5,
+    "title": "Prueba 06/07/2023",
+    "description": "Description",
+    "code": "a7",
     "price": 10,
     "status": true,
     "stock": 10,

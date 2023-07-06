@@ -10,7 +10,7 @@ app.use(express.json())
 app.use(express.urlencoded({extended: true}))
 
 // Obtener todos los productos
-productRouter.get('/products', async (req, res) => {
+productRouter.get('/', async (req, res) => {
     try {
       const limit = req.query.limit; // Obtener el límite de resultados del query param
   
@@ -26,7 +26,7 @@ productRouter.get('/products', async (req, res) => {
   });
   
   // Endpoint dinamico para obtener un producto por su ID 
-  productRouter.get('/products/:pid', async (req, res) => {
+  productRouter.get('/:pid', async (req, res) => {
     const productId = parseInt(req.params.pid); // Obtener el ID del producto como entero
     try {
        
@@ -43,10 +43,10 @@ productRouter.get('/products', async (req, res) => {
   });
 
   // Agregar un nuevo producto
-productRouter.post('/products', (req, res) => {   
+productRouter.post('/', (req, res) => {   
     try {
         const productData = req.body;
-      //productManager.addProduct(productData);
+      productManager.addProduct(productData);
       res.status(201).json({ message: 'Product added successfully.' });
       return res.send(productData)
     } catch (error) {
@@ -57,7 +57,7 @@ productRouter.post('/products', (req, res) => {
   });
 
   // Actualizar un producto
-productRouter.put('/products/:pid', (req, res) => {
+productRouter.put('/:pid', (req, res) => {
     const productId = parseInt(req.params.pid);
     const updatedFields = req.body;
     try {
@@ -69,7 +69,7 @@ productRouter.put('/products/:pid', (req, res) => {
   });
   
  // Eliminar un producto
-productRouter.delete('/products/:pid', (req, res) => {
+productRouter.delete('/:pid', (req, res) => {
     const productId = parseInt(req.params.pid);
     try {
       productManager.deleteProduct(productId);
@@ -78,3 +78,6 @@ productRouter.delete('/products/:pid', (req, res) => {
       res.status(404).json({ error: error.message });
     }
   });
+
+
+  module.exports=productRouter
