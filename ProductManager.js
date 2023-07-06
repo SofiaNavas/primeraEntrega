@@ -23,54 +23,19 @@ class ProductManager {
     }
   }
 
- /* addProduct(title, description, price, thumbnail, code, stock) {
-    if (!title || !description || !price || !thumbnail || !code || !stock) {
-      throw new Error(
-        "Title, description, price, thumbnail, code, and stock are mandatory properties."
-      );
-    }
-
-    const findCode = this.products.find(function(element) {
-        return element.code === code;
-         });
-
-
-        if (findCode) {
-            throw new Error("El campo code no se puede repetir");
-       }
-
-
-    const product = {
-      id: this.products.length + 1,
-      title,
-      description,
-      price,
-      thumbnail,
-      code,
-      stock,
-    };
-
-    try {
-      this.products.push(product);
-      fs.writeFileSync(
-        this.path,
-        JSON.stringify(this.products, null, 2),
-        'utf-8'
-      );
-      console.log("Product added successfully.");
-    } catch (error) {
-      console.error('Error in addProduct:', error);
-    }
-  }
-
-  */
-
   addProduct(data) {
-    if (!data.title || !data.description || !data.price || !data.thumbnail || !data.code || !data.stock) {
-      throw new Error(
-        "Title, description, price, thumbnail, code, and stock are mandatory properties."
-      );
-    }
+    if (!data.title || !data.description || !data.code || !data.price || !data.stock || !data.category) {
+        throw new Error(
+          "Title, description, code, price, stock, and category are mandatory properties."
+        );
+      }
+    
+    if (typeof data.title !== 'string' || typeof data.description !== 'string' ||
+          typeof data.code !== 'string' || typeof data.price !== 'number' ||
+          typeof data.status !== 'boolean' || typeof data.stock !== 'number' ||
+          typeof data.category !== 'string' || !Array.isArray(data.thumbnails)) {
+        throw new Error("Invalid data types for one or more fields.");
+      }
 
     const findCode = this.products.find(function(element) {
         return element.code === data.code;
@@ -86,10 +51,14 @@ class ProductManager {
       id: this.products.length + 1,
       title: data.title,
       description: data.description,
-      price: data.price,
-      thumbnail: data.thumbnail,
       code: data.code,
+      price: data.price,
+      status: data.status !== undefined ? data.status : true, // Default status is true
       stock: data.stock,
+      category:data.category,
+      thumbnail: data.thumbnail || [] // Default empty array for thumbnails
+      
+      
     };
 
     try {
