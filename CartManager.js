@@ -28,7 +28,7 @@ class CartManager {
     
      const product = {
       id: this.products.length + 1,
-      dataProduct: data.product || [] // Default empty array for products
+      product: data.product  // Default empty array for products
       
       
     };
