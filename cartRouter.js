@@ -11,7 +11,38 @@ app.use(express.urlencoded({extended: true}))
 
 
 
-
+// Obtener todos los carritos
+cartRouter.get('/', async (req, res) => {
+    try {
+      const limit = req.query.limit; // Obtener el límite de resultados del query param
+  
+      const carts = cartManager.getProducts();
+  
+      // Aplicar el límite si se especificó en el query param
+      const limitedCarts = limit ? products.slice(0, limit) : carts;
+  
+      res.json(limitedCarts);
+    } catch (error) {
+      res.status(500).json({ error: 'Error al obtener los productos' });
+    }
+  });
+  
+  // Endpoint dinamico para obtener un carrito por su ID 
+  cartRouter.get('/:cid', async (req, res) => {
+    const cartId = parseInt(req.params.cid); // Obtener el ID del producto como entero
+    try {
+       
+      const cart = cartManager.getProductById(cartId);
+  
+      res.json(cart);
+    } catch (error) {
+      if (error.message === 'ID not found') {
+        res.status(404).json({ error: 'Carrito no encontrado' });
+      } else {
+        res.status(500).json({ error: 'Error al obtener el carrito' });
+      }
+    }
+  });
 
 
 // Crear un nuevo carrito
@@ -25,6 +56,19 @@ cartRouter.post('/', (req, res) => {
       res.status(400).json({ error: error.message });
     }
     
+  });
+
+
+  // Actualizar un carrito
+cartRouter.put('/:cid', (req, res) => {
+    const cartId = parseInt(req.params.cid);
+    const updatedFields = req.body;
+    try {
+      cartManager.updateProduct(cartId, updatedFields);
+      res.json({ message: 'Product updated successfully.' });
+    } catch (error) {
+      res.status(404).json({ error: error.message });
+    }
   });
   
 
