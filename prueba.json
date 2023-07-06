@@ -1,0 +1,24 @@
+[
+  {
+    "id": 1,
+    "title": "Prueba 06/07/2023",
+    "description": "Description",
+    "code": "a1",
+    "price": 10,
+    "status": true,
+    "stock": 10,
+    "category": "Category",
+    "thumbnail": []
+  },
+  {
+    "id": 2,
+    "title": "Prueba 06/07/2023",
+    "description": "Description",
+    "code": "a2",
+    "price": 10,
+    "status": true,
+    "stock": 10,
+    "category": "Category",
+    "thumbnail": []
+  }
+]

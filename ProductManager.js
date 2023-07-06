@@ -33,7 +33,7 @@ class ProductManager {
     if (typeof data.title !== 'string' || typeof data.description !== 'string' ||
           typeof data.code !== 'string' || typeof data.price !== 'number' ||
           typeof data.status !== 'boolean' || typeof data.stock !== 'number' ||
-          typeof data.category !== 'string' || !Array.isArray(data.thumbnails)) {
+          typeof data.category !== 'string' ) {
         throw new Error("Invalid data types for one or more fields.");
       }
 
@@ -146,3 +146,48 @@ class ProductManager {
 
 module.exports = ProductManager;
 
+//Casos de prueba
+
+// Prueba 1: crear una instancia de la clase "Product Manager"
+
+/*
+const manager = new ProductManager('./prueba.json');
+console.log(manager.getProducts()); 
+*/
+
+//Prueba 2: 
+
+/*
+const manager = new ProductManager('./prueba.json');
+console.log(manager.getProducts()); 
+manager.addProduct({
+      
+    "title": "Prueba 06/07/2023",
+    "description": "Description",
+    "code": "a2",
+    "price": 10,
+    "status": true, // Default status is true
+    "stock": 10,
+    "category":"Category"
+    }); 
+console.log(manager.getProducts());
+
+
+
+//Prueba 3
+/*
+const manager = new ProductManager('./prueba.json');
+console.log(manager.getProductById(1));
+*/
+
+//Prueba 4
+/*
+const manager = new ProductManager('./prueba.json');
+console.log(manager.updateProduct(1, {title: 'Nuevo título'}));
+*/
+
+//Prueba 5
+/*
+const manager = new ProductManager('./prueba.json');
+console.log(manager.deleteProduct(1));
+*/
