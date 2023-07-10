@@ -61,40 +61,19 @@ cartRouter.post('/', (req, res) => {
 
 
   // Actualizar un carrito
-cartRouter.post('/:cid/product/:pid', (req, res) => {
+  cartRouter.post('/:cid/product/:pid', (req, res) => {
     const cartId = parseInt(req.params.cid);
     const productId = parseInt(req.params.pid);
     const quantity = req.body.quantity || 1;
-    
-    fs.readFile('cart.json', 'utf-8', (err, fileContent) => {
-      if (err) {
-        console.error('Error reading cart file:', err);
-        res.status(500).json({ error: 'Internal server error' });
-        return;
-      }
-      const carts = JSON.parse(fileContent) || [];
-      const cart = carts.find((c) => c.id === cartId);
-      if (cart) {
-        const existingProduct = cart.products.find((p) => p.product.productID === productId);
-
-        if (existingProduct) {
-          existingProduct.quantity += quantity;
-        } else {
-          cart.products.push({ product: productId, quantity });
-        }
-        fs.writeFile('carrito.json', JSON.stringify(carts, null, 2), 'utf-8', (err) => {
-          if (err) {
-            console.error('Error writing cart file:', err);
-            res.status(500).json({ error: 'Internal server error' });
-            return;
-          }
-          res.json({ message: 'Product added to cart successfully.' });
-        });
-      } else {
-        res.status(404).json({ error: 'Cart not found' });
-      }
-    });
+  
+    try {
+      cartManager.updateProduct(cartId, productId, quantity);
+      res.status(200).json({ message: 'Product updated successfully.' });
+    } catch (error) {
+      res.status(400).json({ error: error.message });
+    }
   });
+
   
 
 

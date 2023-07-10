@@ -28,7 +28,7 @@ class CartManager {
     
      const product = {
       id: this.products.length + 1,
-      product: data.product  // Default empty array for products
+      product: data.product || [] // Default empty array for products
       
       
     };
@@ -62,58 +62,37 @@ class CartManager {
         }
     }
 
-    updateProduct (id, updatedFields) {
-        const findId = this.products.findIndex(function(element) {
-            return element.id === id;
-          });
-
-          if (findId === -1) {
-            throw new Error("ID not found");
+    updateProduct(cid, pid, quantity = 1) {
+      const cartId = parseInt(cid);
+      const productId = parseInt(pid);
+      const productIndex = this.products.findIndex((element) => element.id === cartId);
+  
+      if (productIndex === -1) {
+        throw new Error('The cart ID does not exist.');
+      } else {
+        const product = this.products[productIndex];
+        const existingProductIndex = product.product.findIndex(
+          (element) => element.productID === productId
+        );
+  
+        if (existingProductIndex === -1) {
+          // Add a new product to the cart
+          const newProduct = {
+            productID: productId,
+            quantity: quantity,
+          };
+          product.product.push(newProduct);
         } else {
-            
-            const updatedProduct = {
-                ...this.products[findId],
-                ...updatedFields,
-                id: this.products[findId].id, // Retain the original ID
-              };
-              
-              this.products[findId] = updatedProduct;
-
-              try {
-                fs.writeFileSync(
-                  this.path,
-                  JSON.stringify(this.products, null, 2),
-                  'utf-8'
-                );
-                console.log("Product updated successfully.");
-              } catch (error) {
-                console.error('Error in updateProduct:', error);
-              }
-            }
-    }
-
-    deleteProduct(id) {
-        const findId = this.products.findIndex(function(element) {
-            return element.id === id;
-          });
-    
-        if (findId === -1) {
-          throw new Error("ID not found");
-        } else {
-          this.products.splice(findId, 1);
-    
-          try {
-            fs.writeFileSync(
-              this.path,
-              JSON.stringify(this.products, null, 2),
-              'utf-8'
-            );
-            console.log("Product deleted successfully.");
-          } catch (error) {
-            console.error('Error in deleteProduct:', error);
-          }
+          // Increment the quantity of an existing product
+          product.product[existingProductIndex].quantity += quantity;
         }
+  
+        fs.writeFileSync(this.path, JSON.stringify(this.products, null, 2), 'utf-8');
+        console.log('Product updated successfully.');
+      }
     }
+
+    
 }
 
 module.exports = CartManager;
