@@ -1,12 +1,12 @@
 const express = require('express');
-const ProductManager = require('./ProductManager');
+const ProductManager = require('./manager/ProductManager');
 const Router = express.Router;
 
 
 const app = express();
-const productRouter = require('./productRouter')
-const cartRouter = require('./cartRouter')
-const productManager = new ProductManager('./prueba.json');
+const productRouter = require('./routers/productRouter')
+const cartRouter = require('./routers/cartRouter')
+//const productManager = new ProductManager('./prueba.json');
 
 app.use(express.json())
 app.use(express.urlencoded({extended: true}))

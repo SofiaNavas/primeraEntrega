@@ -1,6 +1,6 @@
 const fs = require('fs');
 const express = require('express');
-const CartManager = require('./CartManager');
+const CartManager = require('../manager/CartManager');
 const Router = express.Router;
 
 const app = express();
