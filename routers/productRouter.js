@@ -47,7 +47,6 @@ productRouter.post('/', (req, res) => {
     try {
         const productData = req.body;
       productManager.addProduct(productData);
-      //req.app.get('io').emit('nuevoProducto', productData);
       req.io.emit('nuevoProducto', productData); // Emit the event using the io instance passed in the request object
       console.log('Product added:', productData);
       res.status(201).json({ message: 'Product added successfully.' });
