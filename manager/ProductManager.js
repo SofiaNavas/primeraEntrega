@@ -90,6 +90,20 @@ class ProductManager {
         }
     }
 
+    getProductByCode (data) {
+
+      const code = data.code
+      const findCode = this.products.find(function(element) {
+          return element.code === code;
+        });
+
+        if (!findCode) {
+          throw new Error("Code not found");
+      } else {
+          return findCode
+      }
+  }
+
     updateProduct (id, updatedFields) {
         const findId = this.products.findIndex(function(element) {
             return element.id === id;

@@ -28,4 +28,13 @@ socket.on('nuevoProducto', (data) => {
     table.appendChild(row);
   });
 
+
+  socket.on('deleteProduct', (productId) => {
+    
+    const row = document.querySelector(`tr[data-product-id="${productId}"]`);
+    if (row) {
+    row.remove();
+  }
+    
+  });
   
