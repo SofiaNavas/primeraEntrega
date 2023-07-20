@@ -47,11 +47,13 @@ productRouter.post('/', (req, res) => {
     try {
         const productData = req.body;
       productManager.addProduct(productData);
-      newProduct= productManager.getProductByCode(productData);
-      req.io.emit('nuevoProducto', newProduct); // Emit the event using the io instance passed in the request object
+      // newProduct= productManager.getProductByCode(productData);
+      // req.io.emit('nuevoProducto', newProduct); // Emit the event using the io instance passed in the request object
+      const updatedProducts = productManager.getProducts(); // Obtén la lista actualizada de productos
+      req.io.emit('nuevoProducto', updatedProducts); // Emitir la lista de productos actualizada
       console.log('Product added:', productData);
       res.status(201).json({ message: 'Product added successfully.' });
-      return res.send(productData)
+      // return res.send(productData)
     } catch (error) {
       res.status(400).json({ error: error.message });
     }
@@ -76,7 +78,9 @@ productRouter.delete('/:pid', (req, res) => {
     const productId = parseInt(req.params.pid);
     try {
       productManager.deleteProduct(productId);
+      const updatedProducts = productManager.getProducts();
       req.io.emit('deleteProduct', productId); // Emit the event using the io instance passed in the request object
+      req.io.emit('nuevoProducto', updatedProducts);
       console.log('Product deleted:', productId);
       res.json({ message: 'Product deleted successfully.' });
     } catch (error) {

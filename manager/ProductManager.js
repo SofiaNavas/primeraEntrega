@@ -48,7 +48,7 @@ class ProductManager {
 
 
     const product = {
-      id: this.products.length + 1,
+      id: this.products.length + 1,  // CAMBIAR ESTO PARA QUE AGREGUE EN FUNCION DEL ID MAS GRANDE Y QUE NO SE PUEDA REPETIR
       title: data.title,
       description: data.description,
       code: data.code,
